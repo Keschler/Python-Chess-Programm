@@ -105,8 +105,6 @@ class Game:
                 current_field_where = 6
             elif self.user_input_where[0] == "h":
                 current_field_where = 7
-        print(current_line_where, current_field_where)
-        print("Line", self.board[current_line_choose][current_field_choose])
         self.board[current_line_where][current_field_where] = self.board[current_line_choose][
             current_field_choose]  # Move selected figure
         # Insert a blank field at the selected figure
