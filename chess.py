@@ -1,4 +1,5 @@
 import chess
+from string import ascii_lowercase
 
 uniDict = {"WHITE": {0: "♟", 1: "♖", 2: "♘", 3: "♗", 4: "♔", 5: "♕", 6: "."},
            "BLACK": {0: "♙", 1: "♜", 2: "♞", 3: "♝", 4: "♚", 5: "♛", 6: "."}}
@@ -70,41 +71,10 @@ class Game:
         current_line_choose = 8 - int(self.user_input_choose[1])
         current_field_where = 0
         current_line_where = 8 - int(self.user_input_where[1])
-        for j in range(8):
-            # Convert current_field_choose
-            if self.user_input_choose[0] == "a":
-                current_field_choose = 0
-            elif self.user_input_choose[0] == "b":
-                current_field_choose = 1
-            elif self.user_input_choose[0] == "c":
-                current_field_choose = 2
-            elif self.user_input_choose[0] == "d":
-                current_field_choose = 3
-            elif self.user_input_choose[0] == "e":
-                current_field_choose = 4
-            elif self.user_input_choose[0] == "f":
-                current_field_choose = 5
-            elif self.user_input_choose[0] == "g":
-                current_field_choose = 6
-            elif self.user_input_choose[0] == "h":
-                current_field_choose = 7
-            # Convert current_field_where
-            if self.user_input_where[0] == "a":
-                current_field_where = 0
-            elif self.user_input_where[0] == "b":
-                current_field_where = 1
-            elif self.user_input_where[0] == "c":
-                current_field_where = 2
-            elif self.user_input_where[0] == "d":
-                current_field_where = 3
-            elif self.user_input_where[0] == "e":
-                current_field_where = 4
-            elif self.user_input_where[0] == "f":
-                current_field_where = 5
-            elif self.user_input_where[0] == "g":
-                current_field_where = 6
-            elif self.user_input_where[0] == "h":
-                current_field_where = 7
+        
+        current_field_choose = ascii_lowercase.index(self.user_input_choose[0])  # Convert chess language
+        current_field_where = ascii_lowercase.index(self.user_input_where[0])  # Convert chess language 
+
         self.board[current_line_where][current_field_where] = self.board[current_line_choose][
             current_field_choose]  # Move selected figure
         # Insert a blank field at the selected figure
