@@ -1,7 +1,7 @@
 import chess
 
-uniDict = {"WHITE": {0: "♙", 1: "♖", 2: "♘", 3: "♗", 4: "♔", 5: "♕", 6: "."},
-           "BLACK": {0: "♟", 1: "♜", 2: "♞", 3: "♝", 4: "♚", 5: "♛", 6: "."}}
+uniDict = {"WHITE": {0: "♟", 1: "♖", 2: "♘", 3: "♗", 4: "♔", 5: "♕", 6: "."},
+           "BLACK": {0: "♙", 1: "♜", 2: "♞", 3: "♝", 4: "♚", 5: "♛", 6: "."}}
 
 
 class Game:
@@ -17,11 +17,11 @@ class Game:
             [],
             [],
             []] for i in range(8)]  # Nice looking board
-        self.create_default_Board()
+        self.create_default_board()
         self.show_current_board()
         self.start()
 
-    def create_default_Board(self):
+    def create_default_board(self):
         """
         Create Default Board
         """
@@ -35,7 +35,11 @@ class Game:
                 self.board[i][5] = uniDict["WHITE"][3]
                 self.board[i][6] = uniDict["WHITE"][2]
                 self.board[i][7] = uniDict["WHITE"][1]
-            elif i == 7:
+            elif i == 1:
+                for s in range(8):  # Create pawns
+                    self.board[1][s] = uniDict["BLACK"][0]  # For black
+                    self.board[6][s] = uniDict["WHITE"][0]  # For white
+            elif i == 7:  # If last line
                 self.board[i][0] = uniDict["BLACK"][1]
                 self.board[i][1] = uniDict["BLACK"][2]
                 self.board[i][2] = uniDict["BLACK"][3]
@@ -46,10 +50,8 @@ class Game:
                 self.board[i][7] = uniDict["BLACK"][1]
             else:
                 for j in range(8):
-                    if j % 2 == 0:  # Every Second time
+                    if self.board[i][j] != uniDict["WHITE"][0]:  # If the field is empty
                         self.board[i][j] = uniDict["WHITE"][6]
-                    else:
-                        self.board[i][j] = uniDict["BLACK"][6]
 
     def show_current_board(self):
         """
@@ -104,12 +106,11 @@ class Game:
             elif self.user_input_where[0] == "h":
                 current_field_where = 7
         print(current_line_where, current_field_where)
-        figure_choose = self.board[current_line_choose][current_field_choose]
-        figure_where = self.board[current_line_where][current_field_where]
         print("Line", self.board[current_line_choose][current_field_choose])
         self.board[current_line_where][current_field_where] = self.board[current_line_choose][
-                current_field_choose]  # Move selected figure
-        self.board[current_line_choose][current_field_choose] = "."  # Insert a blank field at the selected figure
+            current_field_choose]  # Move selected figure
+        # Insert a blank field at the selected figure
+        self.board[current_line_choose][current_field_choose] = "."
 
     def start(self):
         while True:
@@ -119,11 +120,14 @@ class Game:
                 else:
                     print("Black is playing")
 
-                self.user_input_choose = str(input("which figure do you want to choose? zB(g1)"))
-                self.user_input_where = str(input("Where should it go? zB(h3)"))
+                self.user_input_choose = str(
+                    input("which figure do you want to choose? zB(g1)"))
+                self.user_input_where = str(
+                    input("Where should it go? zB(h3)"))
             except ValueError:
                 print("Give me a right value!")
-            move = chess.Move.from_uci(self.user_input_choose + self.user_input_where)  # Convert it
+            move = chess.Move.from_uci(
+                self.user_input_choose + self.user_input_where)  # Convert it
             if move in self.chess_board.legal_moves:  # If move is legal
                 self.chess_board.push(move)  # Make move in chess library
                 self.make_move()
