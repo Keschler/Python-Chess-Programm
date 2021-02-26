@@ -1,13 +1,13 @@
 import chess
 from string import ascii_lowercase
 
-uniDict = {"WHITE": {0: "♟", 1: "♖", 2: "♘", 3: "♗", 4: "♔", 5: "♕", 6: "."},
-           "BLACK": {0: "♙", 1: "♜", 2: "♞", 3: "♝", 4: "♚", 5: "♛", 6: "."}}
+uniDict = {"WHITE": {0: "♟", 1: "♖", 2: "♘", 3: "♗", 4: "♕", 5: "♔", 6: "."},
+           "BLACK": {0: "♙", 1: "♜", 2: "♞", 3: "♝", 4: "♛", 5: "♚", 6: "."}}
 
 
 class Game:
     def __init__(self):
-        self.current_color = 0  # Which color is playing | 0 = WHITE 1 = BLACK
+        self.current_color = "WHITE"
         self.chess_board = chess.Board()
         self.board = [[
             [],
@@ -58,9 +58,10 @@ class Game:
         """
         Print current board
         """
-        print("a | b | c | d | e | f | g | h")
         for i in range(8):
-            print("   ".join(self.board[i]))
+            line = abs(-8 + i)
+            print("   ".join(self.board[i]), line)
+        print("a | b | c | d | e | f | g | h")
 
     def make_move(self):
         """
@@ -71,36 +72,46 @@ class Game:
         current_line_choose = 8 - int(self.user_input_choose[1])
         current_field_where = 0
         current_line_where = 8 - int(self.user_input_where[1])
-        
+
         current_field_choose = ascii_lowercase.index(self.user_input_choose[0])  # Convert chess language
-        current_field_where = ascii_lowercase.index(self.user_input_where[0])  # Convert chess language 
+        current_field_where = ascii_lowercase.index(self.user_input_where[0])  # Convert chess language
 
         self.board[current_line_where][current_field_where] = self.board[current_line_choose][
             current_field_choose]  # Move selected figure
         # Insert a blank field at the selected figure
         self.board[current_line_choose][current_field_choose] = "."
 
+    def switch_color(self):
+        if self.current_color == "WHITE":
+            return "BLACK"
+        else:
+            return "WHITE"
+
     def start(self):
         while True:
-            try:
-                if self.current_color == 0:
-                    print("White is playing")
-                else:
-                    print("Black is playing")
-
-                self.user_input_choose = str(
-                    input("which figure do you want to choose? zB(g1)"))
-                self.user_input_where = str(
-                    input("Where should it go? zB(h3)"))
-            except ValueError:
-                print("Give me a right value!")
+            print(self.current_color, ": is playing!")
+            self.user_input_choose = str(
+                input("which figure do you want to choose? zB(g1)"))
+            self.user_input_where = str(
+                input("Where should it go? zB(h3)"))
+            # If input is not 2
+            if len(self.user_input_where) != 2 or (len(self.user_input_choose) != 2):
+                print("Give a right value!")
+                continue
             move = chess.Move.from_uci(
                 self.user_input_choose + self.user_input_where)  # Convert it
             if move in self.chess_board.legal_moves:  # If move is legal
                 self.chess_board.push(move)  # Make move in chess library
                 self.make_move()
-                self.current_color = 1 - self.current_color  # Switch color
+                self.current_color = self.switch_color()
                 self.show_current_board()
+                if self.chess_board.is_game_over():
+                    print(self.current_color, "won!")
+                    self.chess_board.reset()
+                    if input("Do you wanna play again y/n").lower() == "y":
+                        Game()
+                    else:
+                        break
             else:
                 print("Please give right values!")
 
