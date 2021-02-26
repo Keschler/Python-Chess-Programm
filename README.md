@@ -11,5 +11,5 @@ Please make sure that you installed the library "chess"
         ♟   ♟   ♟   ♟   .   ♟   ♟   ♟ 2
         ♜   ♞   ♝   ♛   ♚   ♝   .   ♜ 1
         a | b | c | d | e | f | g | h
-        BLACK : is playing!
+        BLACK is playing!
         which figure do you want to choose? zB(g1)
