@@ -89,7 +89,7 @@ class Game:
 
     def start(self):
         while True:
-            print(self.current_color, ": is playing!")
+            print(self.current_color.lower(), "is playing!")
             self.user_input_choose = str(
                 input("which figure do you want to choose? zB(g1)"))
             self.user_input_where = str(
