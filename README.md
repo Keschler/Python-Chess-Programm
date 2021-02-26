@@ -13,3 +13,5 @@ Please make sure that you installed the library "chess"
         a | b | c | d | e | f | g | h
         BLACK is playing!
         which figure do you want to choose? zB(g1)
+## Run:
+    Just download chess.py and run it!
