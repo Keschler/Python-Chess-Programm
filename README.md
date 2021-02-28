@@ -1,5 +1,5 @@
 # Python-Chess-Programm
-A simple python chess programm that youses the chess library.
+A simple python chess programm.
 Please make sure that you installed the library "chess"
 ## Screenshoot:
         ♖   ♘   ♗   ♕   ♔   ♗   ♘   ♖ 8
