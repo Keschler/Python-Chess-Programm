@@ -14,4 +14,5 @@ Please make sure that you installed the library "chess"
         BLACK is playing!
         which figure do you want to choose? zB(g1)
 ## Run:
-    Just download chess.py and run it!
+    Download chess.py and install the chess library with:
+        pip install chess
